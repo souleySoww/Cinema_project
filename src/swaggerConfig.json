@@ -1,0 +1,2571 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cinema API",
+    "version": "1.0.0",
+    "description": "Cinema Api in TS"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/movies": {
+      "get": {
+        "summary": "List all movies",
+        "description": "Retrieve a list of movies with pagination and sorting options.",
+        "operationId": "listMovies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of movies to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Field to order the movies by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of movies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "summary": "Get a Movie",
+        "description": "Retrieve a movie by its id.",
+        "operationId": "getMovieById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "post": {
+        "summary": "Create a Movie",
+        "description": "Create a movie.",
+        "operationId": "createMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "description": "Image of the movie",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "put": {
+        "summary": "Edit a Movie",
+        "description": "Edit a movie.",
+        "operationId": "updateMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "delete": {
+        "summary": "Delete a Movie",
+        "description": "Delete a movie by its id.",
+        "operationId": "deleteMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/movies/{id}/shows": {
+      "get": {
+        "summary": "Get Shows of a movie",
+        "description": "Retrieve shows of a movie by its id.",
+        "operationId": "getShowsMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/rooms": {
+      "get": {
+        "summary": "List all rooms",
+        "description": "Retrieve a list of rooms with pagination and sorting options.",
+        "operationId": "listRooms",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of rooms to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Field to order the rooms by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of rooms",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Room"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}": {
+      "get": {
+        "summary": "Retrieve a room",
+        "description": "Retrieve a room by its id.",
+        "operationId": "getRoomById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked room",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A room",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Room"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Room"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}": {
+      "put": {
+        "summary": "Edit a room",
+        "description": "Edit a room",
+        "operationId": "updateRoom",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the room",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the room",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the room",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the room",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State of the room",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": 10
+            }
+          },
+          {
+            "name": "handicapAvailable",
+            "in": "query",
+            "description": "Is handicapAvalaible of the room",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": 10
+            }
+          },
+          {
+            "name": "capacity",
+            "in": "query",
+            "description": "Capacity of the room",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A room",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Room"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Room"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}/shows": {
+      "get": {
+        "summary": "Get Shows of a room",
+        "description": "Retrieve shows of a room by its id.",
+        "operationId": "getShowsRoom",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked room",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of shows of the movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Room"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}": {
+      "delete": {
+        "summary": "Delete a Room",
+        "description": "Delete a room by its id.",
+        "operationId": "deleteRoom",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked room",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete confirmation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/rooms/{id}": {
+      "post": {
+        "summary": "Create a room",
+        "description": "Create a room",
+        "operationId": "createRoom",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the room",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the room",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the room",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State of the room",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": 10
+            }
+          },
+          {
+            "name": "handicapAvailable",
+            "in": "query",
+            "description": "Is handicapAvalaible of the room",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": 10
+            }
+          },
+          {
+            "name": "capacity",
+            "in": "query",
+            "description": "Capacity of the room",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A room",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Room"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Room"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/shows": {
+      "get": {
+        "summary": "List all shows",
+        "description": "Retrieve a list of shows with pagination and sorting options.",
+        "operationId": "listShows",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of shows to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Field to order the shows by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of shows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Show"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/shows/{id}": {
+      "get": {
+        "summary": "Retrieve a show",
+        "description": "Retrieve a show by its id.",
+        "operationId": "getShowById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked show",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Show"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Show"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/shows/{id}": {
+      "delete": {
+        "summary": "Delete a show",
+        "description": "Delete a show by its id.",
+        "operationId": "deleteShow",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked show",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Show"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Show"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/shows/{id}": {
+      "post": {
+        "summary": "Create a show",
+        "description": "Create a show",
+        "operationId": "createShow",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "startAt",
+            "in": "query",
+            "description": "StartAt of the show",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "endAt",
+            "in": "query",
+            "description": "EndAt of the show",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "state of the show",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": 10
+            }
+          },
+          {
+            "name": "room",
+            "in": "query",
+            "description": "Room of the show",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "default": 10
+            }
+          },
+          {
+            "name": "movie",
+            "in": "query",
+            "description": "Movie of the show",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A show",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Show"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/stats": {
+      "get": {
+        "summary": "List all stats",
+        "description": "Retrieve a list of stats with sorting options.",
+        "operationId": "listMovies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "movie",
+            "in": "query",
+            "description": "To filter by movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "room",
+            "in": "query",
+            "description": "To filter by room",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "startAt",
+            "in": "query",
+            "description": "To filter by startAt",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          {
+            "name": "endAt",
+            "in": "query",
+            "description": "To filter by endAt",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of stats",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Stats"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/tickets": {
+      "get": {
+        "summary": "List all movies",
+        "description": "Retrieve a list of movies with pagination and sorting options.",
+        "operationId": "listMovies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of movies to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Field to order the movies by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of movies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tickets/{id}": {
+      "get": {
+        "summary": "Get a Movie",
+        "description": "Retrieve a movie by its id.",
+        "operationId": "getMovieById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tickets/{id}": {
+      "post": {
+        "summary": "Create a Movie",
+        "description": "Create a movie.",
+        "operationId": "createMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "description": "Image of the movie",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tickets/:id": {
+      "put": {
+        "summary": "Edit a Movie",
+        "description": "Edit a movie.",
+        "operationId": "updateMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tickets/:id": {
+      "delete": {
+        "summary": "Delete a Movie",
+        "description": "Delete a movie by its id.",
+        "operationId": "deleteMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/tickets /:id/shows": {
+      "get": {
+        "summary": "Get Shows of a movie",
+        "description": "Retrieve shows of a movie by its id.",
+        "operationId": "getShowsMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/transactions": {
+      "get": {
+        "summary": "List all movies",
+        "description": "Retrieve a list of movies with pagination and sorting options.",
+        "operationId": "listMovies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of movies to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Field to order the movies by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of movies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}": {
+      "get": {
+        "summary": "Get a Movie",
+        "description": "Retrieve a movie by its id.",
+        "operationId": "getMovieById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}": {
+      "post": {
+        "summary": "Create a Movie",
+        "description": "Create a movie.",
+        "operationId": "createMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "description": "Image of the movie",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/:id": {
+      "put": {
+        "summary": "Edit a Movie",
+        "description": "Edit a movie.",
+        "operationId": "updateMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions/:id": {
+      "delete": {
+        "summary": "Delete a Movie",
+        "description": "Delete a movie by its id.",
+        "operationId": "deleteMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/transactions /:id/shows": {
+      "get": {
+        "summary": "Get Shows of a movie",
+        "description": "Retrieve shows of a movie by its id.",
+        "operationId": "getShowsMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+
+    "/users": {
+      "get": {
+        "summary": "List all movies",
+        "description": "Retrieve a list of movies with pagination and sorting options.",
+        "operationId": "listMovies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of movies to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "ascending",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Field to order the movies by",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of movies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get a Movie",
+        "description": "Retrieve a movie by its id.",
+        "operationId": "getMovieById",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "post": {
+        "summary": "Create a Movie",
+        "description": "Create a movie.",
+        "operationId": "createMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the movie",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "description": "Image of the movie",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/:id": {
+      "put": {
+        "summary": "Edit a Movie",
+        "description": "Edit a movie.",
+        "operationId": "updateMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Name of the movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "id"
+            }
+          },
+          {
+            "name": "duration",
+            "in": "query",
+            "description": "Duration of the asked movie",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users/:id": {
+      "delete": {
+        "summary": "Delete a Movie",
+        "description": "Delete a movie by its id.",
+        "operationId": "deleteMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/users /:id/shows": {
+      "get": {
+        "summary": "Get Shows of a movie",
+        "description": "Retrieve shows of a movie by its id.",
+        "operationId": "getShowsMovie",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id of the asked movie",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "default": "id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "items": {
+                        "$ref": "#/components/schemas/Movie"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid parameters"
+          },
+          "404": {
+            "description": "Unknown Movie"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Duration in minutes"
+          }
+        }
+      },
+      "Room": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "state": {
+            "type": "boolean"
+          },
+          "handicapAvailable": {
+            "type": "boolean"
+          },
+          "capacity":  {
+            "type": "number"
+          }
+        }
+      },
+      "Show": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "startAt": {
+            "type": "string"
+          },
+          "endAt": {
+            "type": "string"
+          },
+          "state": {
+            "type": "boolean"
+          },
+          "room": {
+            "type": "object"
+          },
+          "movie": {
+            "type": "object"
+          }
+        }
+      },
+      "Stats": {
+        "type": "object",
+        "properties": {
+          "visitsCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Shows": {
+            "type": "object"
+          },
+          "mostPopularShow": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
